@@ -1,0 +1,12 @@
+<launch>
+  <arg name="cloud_in" 		default="/realsense2/depth/color/points"/>
+  <node pkg="tf" type="static_transform_publisher" name="map_to_pcl" args="0 0 0 0 0 0 1 map pcl 100" />
+   <node name="publish_cloud_from_pcd" pkg="approximate_bb" type="publish_cloud_from_pcd" output="screen">
+  		<param name="filename" value="/home/rex/Data/test/monitor_trimmed_2.pcd"/>
+  	</node>
+  <node name="approximate_bounding_box" pkg="approximate_bb" type="approximate_bounding_box" output="screen">
+		<remap from="~input_point_cloud" to="/approximate_bb/cloud" />
+		<param name="output_frame" value="pcl"/>
+		<param name="filename_global" value="/home/rex/Desktop/test/test_save.pcd"/>
+  </node>
+</launch>
